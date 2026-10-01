@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridgewater Seat Plan 2083 – Science | Day Shift</title>
+<style>
+:root{
+  --bg:#0f172a; --bg2:#1e293b; --card:#ffffff; --muted:#64748b;
+  --indigo:#4f46e5; --violet:#7c3aed; --emerald:#059669; --amber:#d97706;
+  --border:#e2e8f0; --text:#0f172a;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f1f5f9;color:var(--text)}
+.hero{background:linear-gradient(135deg,#312e81 0%,#4f46e5 35%,#7c3aed 70%,#a855f7 100%);color:white;padding:28px 20px 90px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-80px;top:-80px;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.25),transparent 70%);border-radius:50%}
+.hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(6px)}
+.hero h1{margin:14px 0 6px;font-size:clamp(24px,4vw,38px);line-height:1.1;font-weight:800;letter-spacing:-.02em}
+.hero p{margin:6px 0;opacity:.92}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.meta span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:999px;font-size:13px}
+.container{max-width:1100px;margin:-60px auto 40px;padding:0 16px;position:relative;z-index:2}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:0 10px 30px rgba(15,23,42,.08)}
+.search-card{padding:18px;display:flex;flex-direction:column;gap:14px}
+.search-row{display:flex;gap:10px;flex-wrap:wrap}
+.search-box{flex:1;min-width:240px;display:flex;align-items:center;gap:10px;background:#f8fafc;border:2px solid var(--border);border-radius:14px;padding:12px 14px}
+.search-box:focus-within{border-color:var(--indigo);background:white}
+.search-box input{border:0;outline:0;background:transparent;font-size:16px;width:100%}
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;font-size:14px}
+.btn-primary{background:linear-gradient(135deg,var(--indigo),var(--violet));color:white}
+.btn-ghost{background:#f1f5f9;color:#334155;border:1px solid var(--border)}
+.btn-small{padding:8px 12px;font-size:13px;border-radius:10px}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border:1px solid var(--border);background:#f8fafc;padding:8px 13px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;user-select:none}
+.pill.active{background:#0f172a;color:white;border-color:#0f172a}
+.pill.class-XI.active{background:#0284c7;border-color:#0284c7}
+.pill.class-XII.active{background:#7c3aed;border-color:#7c3aed}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{padding:14px;text-align:center}
+.stat b{font-size:22px;display:block}
+.stat span{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.rooms{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+@media(max-width:900px){.rooms{grid-template-columns:repeat(2,1fr)}}
+.room-card{padding:14px;cursor:pointer;transition:.15s;text-align:left}
+.room-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(79,70,229,.18);border-color:var(--indigo)}
+.room-card.active{outline:3px solid var(--indigo)}
+.room-card h3{margin:0;font-size:18px}
+.room-card .floor{font-size:12px;color:var(--muted);font-weight:700}
+.room-count{font-size:28px;font-weight:800;margin:6px 0}
+.room-bar{height:8px;background:#eef2ff;border-radius:999px;overflow:hidden}
+.room-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--indigo),var(--violet))}
+.tabs{display:flex;gap:8px;margin:16px 0 0}
+.tab{flex:1;padding:12px;border-radius:12px;border:1px solid var(--border);background:white;font-weight:800;cursor:pointer;text-align:center}
+.tab.active{background:#0f172a;color:white}
+.list{margin-top:12px;overflow:hidden}
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{position:sticky;top:0;background:#f8fafc;text-align:left;padding:12px;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+tr:hover td{background:#f8faff}
+.sym{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;font-size:13px;background:#eef2ff;padding:4px 8px;border-radius:8px;white-space:nowrap}
+.sec{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.sec-B1{background:#dcfce7;color:#166534}.sec-B2{background:#dbeafe;color:#1e40af}.sec-P1{background:#fef3c7;color:#92400e}.sec-P2{background:#ffe4e6;color:#9f1239}.sec-Merged{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
+.room-pill{display:inline-block;background:#0f172a;color:white;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+.modal-back{position:fixed;inset:0;background:rgba(15,23,42,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:50;backdrop-filter:blur(4px)}
+.modal-back.open{display:flex}
+.slip{background:white;border-radius:20px;max-width:480px;width:100%;max-height:92vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.slip-head{background:linear-gradient(135deg,#312e81,#7c3aed);color:white;padding:18px;text-align:center;position:sticky;top:0;z-index:2}
+.hchip{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:800}
+.prof-top{display:flex;gap:14px;align-items:center}
+.slip-body{padding:16px 18px 20px}
+.avatar{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:900;font-size:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prof-sec{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-tile{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:10px}
+.info-tile span{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.info-tile b{display:block;font-size:15px;margin-top:3px}
+.info-tile small{color:var(--muted);font-size:11px;display:block;margin-top:2px}
+.class-bar{display:flex;height:24px;border-radius:8px;overflow:hidden;background:#f1f5f9}
+.class-bar span{display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:900;overflow:hidden;white-space:nowrap;min-width:0}
+.s-B1{background:#059669}.s-B2{background:#2563eb}.s-P1{background:#d97706}.s-P2{background:#e11d48}.s-Merged{background:#64748b}
+.hop-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hop{border:1px solid var(--border);border-radius:12px;padding:9px 10px;cursor:pointer;background:#f8fafc;transition:.12s}
+.hop:hover{border-color:var(--indigo);background:#eef2ff;transform:translateY(-1px)}
+.hop .role{font-size:9px;font-weight:900;letter-spacing:.08em;color:var(--amber);text-transform:uppercase}
+.hop .who{font-weight:800;font-size:13px;margin-top:2px;line-height:1.2}
+.hop .meta{font-size:10px;color:var(--muted);margin-top:2px}
+.hop.off{opacity:.55;cursor:default}
+.hop.off:hover{border-color:var(--border);background:#f8fafc;transform:none}
+.actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.footer{text-align:center;color:var(--muted);font-size:13px;margin:24px 0}
+.mix-card{padding:16px;margin:16px 0}
+.mix-row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:13px}
+.mix-row .lbl{width:120px;flex-shrink:0;font-weight:800}
+.mix-bar{flex:1;display:flex;height:24px;border-radius:8px;overflow:hidden;background:#f1f5f9;min-width:120px}
+.mix-bar span{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;overflow:hidden;white-space:nowrap}
+.mix-bar .s-B1{background:#059669}.mix-bar .s-B2{background:#2563eb}.mix-bar .s-P1{background:#d97706}.mix-bar .s-P2{background:#e11d48}.mix-bar .s-Merged{background:#64748b}
+.mix-nums{width:170px;flex-shrink:0;font-size:11px;color:var(--muted);font-weight:700}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;align-items:center;font-weight:700;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.legend .s-B1{background:#059669}.legend .s-B2{background:#2563eb}.legend .s-P1{background:#d97706}.legend .s-P2{background:#e11d48}.legend .s-Merged{background:#64748b}
+.seat-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:10px}
+.sm-rooms{display:flex;gap:6px;flex-wrap:wrap}
+.sm-rooms .pill{padding:6px 10px;font-size:12px}
+.grid-wrap{overflow:auto;padding:18px 12px 12px;background:#f8fafc;border:1px solid var(--border);border-radius:14px}
+.grid-wrap::before{content:'⬆ FRONT OF ROOM — BOARD / TEACHER';display:block;text-align:center;font-size:10px;font-weight:900;color:#94a3b8;letter-spacing:.12em;padding-bottom:10px}
+.grid-wrap::after{content:'⬇ BACK OF ROOM — DOOR';display:block;text-align:center;font-size:10px;font-weight:900;color:#94a3b8;letter-spacing:.12em;padding-top:10px}
+.room-rows{display:flex;flex-direction:column;gap:14px;align-items:center}
+.brow{display:flex;align-items:stretch;gap:8px}
+.bench{display:flex;gap:4px;background:#e2e8f0;border:1px solid #cbd5e1;border-radius:12px;padding:7px 5px;position:relative}
+.bench::after{content:attr(data-label);position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:900;color:#64748b;background:#f1f5f9;padding:1px 8px;border-radius:999px;border:1px solid #e2e8f0;white-space:nowrap}
+.aisle{width:56px;flex:0 0 auto;align-self:stretch;display:flex;align-items:center;justify-content:center;border-left:2px dashed #cbd5e1;border-right:2px dashed #cbd5e1;background:#fff;border-radius:8px;font-size:9px;font-weight:900;letter-spacing:.18em;color:#94a3b8;writing-mode:vertical-rl}
+.bench .seat{width:118px;min-height:82px}
+.cchip{display:inline-block;font-size:9px;font-weight:900;padding:2px 6px;border-radius:6px;color:#fff;letter-spacing:.04em}
+.c-XI{background:#2563eb}.c-XII{background:#7c3aed}
+.seat-chips{display:flex;gap:4px;justify-content:center;align-items:center;flex-wrap:wrap}
+.seat{background:#fff;border:2px solid var(--border);border-radius:10px;padding:8px 4px;cursor:pointer;font-size:11px;text-align:center;transition:.12s;min-height:70px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.seat:hover{border-color:var(--indigo);transform:translateY(-2px)}
+.seat.nbr{border-color:var(--amber);background:#fffbeb;box-shadow:0 0 0 2px rgba(217,119,6,.25)}
+.seat.self{border-color:var(--indigo);background:#eef2ff;box-shadow:0 0 0 3px rgba(79,70,229,.35);transform:scale(1.05)}
+.seat .nm{font-weight:800;line-height:1.15;max-height:2.3em;overflow:hidden}
+.seat .sg{font-size:9px;color:var(--muted);font-family:ui-monospace,monospace}
+.seat .sec{font-size:9px;padding:2px 6px}
+.seat.empty{background:transparent;border-style:dashed;cursor:default;color:#cbd5e1}
+.note{margin-top:10px;font-size:12px;color:#92400e;background:#fffbeb;border:1px dashed #fcd34d;padding:8px 12px;border-radius:10px;font-weight:700}
+.nbr-panel{margin-top:12px;padding:14px;font-size:13px}
+.nbr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:8px}
+.nbr-item{border:1px solid var(--border);border-radius:10px;padding:8px 10px;cursor:pointer;background:#f8fafc}
+.nbr-item:hover{border-color:var(--amber);background:#fffbeb}
+.nbr-item .role{font-size:10px;font-weight:900;color:var(--amber);text-transform:uppercase;letter-spacing:.08em}
+.nbr-item.self-box{border-color:var(--indigo);background:#eef2ff;cursor:default}
+@media(max-width:640px){
+ .hero{padding:20px 14px 80px}
+ .hero h1{font-size:23px}
+ .search-row .btn{flex:1}
+ .bench .seat{width:82px;min-height:72px;padding:6px 2px}
+ .seat .nm{font-size:10px}
+ .aisle{width:32px;font-size:8px}
+ .bench{padding:5px 3px}
+ .room-rows{gap:12px}
+ table{font-size:12px}
+ td{padding:8px 7px}
+ .sym{font-size:11px}
+ th{padding:9px 7px;font-size:10px}
+ .mix-row .lbl{width:86px;font-size:12px}
+ .mix-nums{width:100%;font-size:11px}
+ .slip{border-radius:14px}
+ .info-grid{grid-template-columns:1fr 1fr;gap:6px}
+ .hop-grid{grid-template-columns:1fr 1fr;gap:6px}
+ .tab{padding:10px 4px;font-size:13px}
+ .container{padding:0 10px}
+ .nbr-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:400px){
+ .bench .seat{width:72px}
+ .aisle{width:26px}
+ .info-grid{grid-template-columns:1fr}
+ .rooms{grid-template-columns:1fr 1fr;gap:8px}
+ .stats{gap:8px}
+}
+@media print{
+ .hero,.search-card,.tabs,.actions,.footer,.rooms,.stats,.mix-card,.p-nav,.hop-grid,.nbr-panel{display:none!important}
+ .container{margin:0;max-width:none}
+ body.printing .container,body.printing .hero{display:none!important}
+ body.printing #modal{position:static;display:block!important;background:none;padding:0;backdrop-filter:none}
+ body.printing .slip{max-width:100%;box-shadow:none;border-radius:0;max-height:none}
+ body.printing .slip-head{position:static}
+}
+.star{cursor:pointer;font-size:18px}
+.star.saved{color:#f59e0b}
+@media print{.hero,.search-card,.tabs,.actions,.footer,.rooms,.stats{display:none!important}.container{margin:0;max-width:none}}
+</style>
+</head>
+<body>
+<div class="hero">
+<div class="hero-inner">
+<div class="badge">🎓 No login • No database • Works offline</div>
+<h1>Bridgewater International College</h1>
+<p style="font-size:18px;font-weight:700">First Terminal Examination 2083 — Seat Plan (Science, Day Shift)</p>
+<p>Sinamangal, Kathmandu • 336 students • 8 rooms • 3 floors</p>
+<div class="meta">
+<span>📍 101 / 106 — 1st Floor</span>
+<span>📍 201 / 202 / 203 — 2nd Floor</span>
+<span>📍 302 / 304 / 305 — 3rd Floor</span>
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="card search-card">
+<div class="search-row">
+<div class="search-box">🔍 <input id="q" placeholder="Search name or symbol… e.g. Aaditya, 2604001, 83030" autocomplete="off"></div>
+<button class="btn btn-primary" onclick="printSlipList()">🖨️ Print list</button>
+<button class="btn btn-ghost" onclick="exportCSV()">⬇️ CSV</button>
+<button class="btn btn-ghost" onclick="clearAll()">✖ Clear</button>
+</div>
+<div>
+<div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px">CLASS</div>
+<div class="filters" id="classF">
+<div class="pill active" data-v="">All</div>
+<div class="pill class-XI" data-v="XI">XI Science</div>
+<div class="pill class-XII" data-v="XII">XII Science</div>
+<div class="pill" data-v="__saved">⭐ My Saved</div>
+</div>
+</div>
+<div>
+<div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px">SECTION</div>
+<div class="filters" id="secF">
+<div class="pill active" data-v="">All</div>
+<div class="pill" data-v="B1">B1</div>
+<div class="pill" data-v="B2">B2</div>
+<div class="pill" data-v="P1">P1</div>
+<div class="pill" data-v="P2">P2</div>
+<div class="pill" data-v="Merged">Merged</div>
+</div>
+</div>
+<div>
+<div style="font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px">ROOM — TAP TO FILTER</div>
+<div class="filters" id="roomF">
+<div class="pill active" data-v="">All rooms</div>
+</div>
+</div>
+</div>
+
+<div class="stats">
+<div class="card stat"><b id="stTotal">336</b><span>Showing</span></div>
+<div class="card stat"><b id="stXI">163</b><span>Class XI</span></div>
+<div class="card stat"><b id="stXII">173</b><span>Class XII</span></div>
+<div class="card stat"><b id="stRooms">8</b><span>Rooms</span></div>
+</div>
+
+<div class="card mix-card" id="mixCard">
+<div style="font-weight:900;margin-bottom:4px">🥧 Section mix — rough breakdown</div>
+<div style="font-size:12px;color:var(--muted);margin-bottom:10px">Who sits in which class &amp; room, by section (B1 / B2 / P1 / P2 / Merged)</div>
+<div id="mixRows"></div>
+<div class="legend" style="margin-top:10px">
+<span><i class="s-B1"></i>B1</span><span><i class="s-B2"></i>B2</span><span><i class="s-P1"></i>P1</span><span><i class="s-P2"></i>P2</span><span><i class="s-Merged"></i>Merged</span>
+</div>
+</div>
+
+<div class="rooms" id="rooms"></div>
+
+<div class="tabs">
+<div class="tab active" id="tabAll">📋 List view</div>
+<div class="tab" id="tabFloor" onclick="toggleFloorView()">🏢 Floor view</div>
+<div class="tab" id="tabSeats" onclick="toggleSeatView()">🪑 Seat map</div>
+</div>
+
+<div class="card list">
+<div class="table-wrap">
+<table>
+<thead><tr><th>★</th><th>#</th><th>Symbol No</th><th>Name</th><th>Class</th><th>Section</th><th>Room</th><th></th></tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+<div class="empty" id="empty" style="display:none">No students found. Try different search.<br><br><button class="btn btn-ghost btn-small" onclick="clearAll()">Clear filters</button></div>
+</div>
+</div>
+
+<div class="card list" id="floorView" style="display:none;padding:18px"></div>
+
+<div class="card list" id="seatView" style="display:none;padding:18px">
+<div class="seat-head">
+<div>
+<div style="font-weight:900" id="smTitle">Room 305 — Seat map (rough)</div>
+<div style="font-size:12px;color:var(--muted)" id="smMeta">Pick a room below, then tap a seat to see who sits around</div>
+</div>
+<div class="sm-rooms" id="smRooms"></div>
+</div>
+<div class="grid-wrap"><div class="room-rows" id="deskGrid"></div></div>
+<div class="note">⚠️ Rough estimation only — each bench seats 2 students (one XI + one XII together), 2 benches per row with a space between, rows run board → door. Not the official seating chart.</div>
+<div class="card nbr-panel" id="nbrPanel">🪑 Tap any seat to see the students sitting <b>front, back, left, right</b> of them.</div>
+</div>
+
+<p class="footer">Built from “seat planing (SCI) pdf.pdf” • 17 pages • First Terminal Exam 2083 • Single-file offline app • Data saved in your browser only (localStorage) • No server / No DB</p>
+</div>
+
+<div class="modal-back" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="slip">
+<div class="slip-head">
+<div style="font-weight:800;font-size:14px;opacity:.9">BRIDGEWATER INTERNATIONAL COLLEGE</div>
+<div style="font-size:12px;opacity:.85">First Terminal Examination 2083 • Day Shift (Science)</div>
+<div style="display:flex;gap:6px;justify-content:center;margin-top:8px;flex-wrap:wrap">
+<span class="hchip" id="mClass">XII Science</span>
+<span class="hchip" id="mSecChip">P1</span>
+<span class="hchip" id="mRoomChip">Room 305</span>
+</div>
+</div>
+<div class="slip-body">
+<div class="prof-top">
+<div class="avatar" id="mAvatar">AJ</div>
+<div>
+<div style="font-size:21px;font-weight:900;line-height:1.15" id="mName">Name</div>
+<div class="sym" style="display:inline-block;margin-top:6px" id="mSym">XII-SCI-2604001</div>
+</div>
+</div>
+
+<div class="prof-sec">📖 At a glance</div>
+<div class="info-grid">
+<div class="info-tile"><span>🏫 Class</span><b id="iClass">XII Science</b><small id="iClassSub">173 students in class</small></div>
+<div class="info-tile"><span>📚 Section</span><b id="iSec">P1</b><small id="iSecSub">78 in section</small></div>
+<div class="info-tile"><span>📍 Report to</span><b id="iRoom">Room 305</b><small id="iRoomSub">3rd Floor • 39 students</small></div>
+<div class="info-tile"><span>💺 Bench</span><b id="iBench">Row 2 • Left</b><small id="iBenchSub">Bench 4 with 1 other</small></div>
+</div>
+
+<div class="prof-sec">📊 Your class strength</div>
+<div class="class-bar" id="iClassBar"></div>
+
+<div class="prof-sec">👥 Around this seat — tap to hop</div>
+<div class="hop-grid" id="hopGrid"></div>
+
+<div class="prof-sec">🧭 Jump to another student</div>
+<div class="p-nav" style="display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn btn-ghost btn-small" onclick="hopStudent(-1)">⬅️ Prev seat</button>
+<button class="btn btn-ghost btn-small" onclick="hopStudent(1)">Next seat ➡️</button>
+<button class="btn btn-ghost btn-small" onclick="copyModal()">📋 Copy symbol</button>
+</div>
+
+<div class="actions">
+<button class="btn btn-primary btn-small" onclick="printSlip()">🖨️ Print slip</button>
+<button class="btn btn-ghost btn-small" onclick="saveModal()">⭐ Save / Unsave</button>
+<button class="btn btn-ghost btn-small" onclick="closeModal()">✖ Close</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const DATA = [{"symbol": "XI-SCI-8303001", "name": "Aaditya Narayan Sah", "section": "B1", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303004", "name": "Aarushi Neupane", "section": "B2", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303005", "name": "Aashish Yadav", "section": "P1", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303006", "name": "Aayusha Devkota", "section": "B2", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303007", "name": "Abishek Yadav", "section": "P1", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303008", "name": "Ajit Kumar Thakur", "section": "B2", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303009", "name": "Alina Lawati", "section": "B1", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303010", "name": "Alisha Rana Magar", "section": "B1", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303011", "name": "Amit Chaudhary", "section": "P2", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303013", "name": "Anand Kumar Yadav", "section": "P2", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303014", "name": "Anand Paswan", "section": "B2", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303015", "name": "Anish Bhandari", "section": "B1", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303016", "name": "Anisha Khadka", "section": "P2", "class": "XI", "room": "305", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303017", "name": "Anjal Shrestha", "section": "B1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303018", "name": "Anjula Tamang", "section": "B2", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303019", "name": "Ankit Kumar Kathayat", "section": "P2", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303021", "name": "Anuska Khanal", "section": "B1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303022", "name": "Archana Khanal", "section": "B1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303023", "name": "Aryan Mukhiya", "section": "P1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303024", "name": "Asbin Khadka", "section": "P1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303025", "name": "Asim Timalsena", "section": "P1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303026", "name": "Asmita Karki", "section": "B2", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303028", "name": "Barsha Bahadur Badhuwal", "section": "B1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303029", "name": "Bhabish Sharma", "section": "P2", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303030", "name": "Bhairab Sah", "section": "P1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303031", "name": "Bhumika Shrestha", "section": "B1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303032", "name": "Bibek Bhitrikoti", "section": "P1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303033", "name": "Bibek Kumar Mahato", "section": "B1", "class": "XI", "room": "304", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303034", "name": "Bikey Kumar Mahato", "section": "B1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303035", "name": "Biraj Kathayat", "section": "B1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303036", "name": "Biren Bharati", "section": "P1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303037", "name": "Birendra Gautam", "section": "P1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303038", "name": "Birju Mandal", "section": "B1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303039", "name": "Bishishya Sapkota", "section": "P1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303040", "name": "Chahana Panthi", "section": "B2", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303041", "name": "Chandan Kumar Ray", "section": "P1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303042", "name": "Deshantar Chaulagain", "section": "B1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303043", "name": "Devesh Shrestha", "section": "P2", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303044", "name": "Devraj Raut", "section": "B2", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303045", "name": "Devson Niraula", "section": "P2", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303046", "name": "Dikshya Paudel", "section": "B1", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303047", "name": "Dilash Karki", "section": "P2", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303048", "name": "Dilip Kumar", "section": "B2", "class": "XI", "room": "302", "floor": "3rd Floor"}, {"symbol": "XI-SCI-8303049", "name": "Guru Prasad Ojha", "section": "P2", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303050", "name": "Himanshu Kumar Sah", "section": "B1", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303051", "name": "Ishwor Karki", "section": "P2", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303052", "name": "Ismriti Bhattarai", "section": "B2", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303053", "name": "Jarshan Raj Danuwar", "section": "P2", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303054", "name": "Jenish Ram", "section": "P2", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303055", "name": "Jenisha Chaudhary", "section": "B1", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303056", "name": "Jiban Sah", "section": "B1", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303057", "name": "Josna Tamang", "section": "B2", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303058", "name": "Kabin Joshi", "section": "P1", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303059", "name": "Kabita Dahal", "section": "B1", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303060", "name": "Kamal Joshi", "section": "P2", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303061", "name": "Kamal Kumar Mahato", "section": "B1", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303062", "name": "Kebal Rai", "section": "P2", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303063", "name": "Krish Sah", "section": "B1", "class": "XI", "room": "203", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303064", "name": "Krisha Bardewa", "section": "B2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303065", "name": "Krisha Bogati", "section": "B2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303066", "name": "Krishna Kumar Ram", "section": "B1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303067", "name": "Krishna Thakur Sharma", "section": "P1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303069", "name": "Kriti Kumari Das", "section": "B2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303070", "name": "Kritshal K.C", "section": "P1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303071", "name": "Kunal Kumar Yadav", "section": "B2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303072", "name": "Lal Babu Sah", "section": "P2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303073", "name": "Lalan KUmar Sah", "section": "P2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303074", "name": "Lalan Kumar Yadav", "section": "P1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303075", "name": "Laxman kc", "section": "P2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303076", "name": "Lizan Neupane", "section": "B1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303077", "name": "Lokraj Neupane", "section": "P2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303078", "name": "Luv Kush Singh", "section": "B2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303079", "name": "Maliza Aryal", "section": "B1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303080", "name": "Manju Giri", "section": "P2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303081", "name": "Marshal Devkota", "section": "B1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303082", "name": "Md Irfan Sheikh", "section": "P1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303083", "name": "Mir Wajid Husen", "section": "B1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303084", "name": "Monika Mandal", "section": "B2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303085", "name": "Mukesh Thakur", "section": "P1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303087", "name": "Nabina Poudel", "section": "B2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303088", "name": "Neha Kumari Sah", "section": "B1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303089", "name": "Newyesh Paudel", "section": "P1", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303090", "name": "Nikhil Khatri", "section": "P2", "class": "XI", "room": "202", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303091", "name": "Nirjala Joshi", "section": "B1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303092", "name": "Nirjala Khadka", "section": "P2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303093", "name": "Nitika Bhusal", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303094", "name": "Pallawi Khadka", "section": "B1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303095", "name": "Pankaj Kumar Singh", "section": "B1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303096", "name": "Pawan Prasad Jaiswal", "section": "P1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303097", "name": "Pinky Chaudhary", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303098", "name": "Prabesh Neupane", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303099", "name": "Prajwol Lama", "section": "P2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303100", "name": "Prakash B.k", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303101", "name": "Prakriti Basnet", "section": "B1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303102", "name": "Pranis Subedi", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303103", "name": "Prasiddha Karki", "section": "P1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303104", "name": "Pratik Thapa Magar", "section": "P2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303105", "name": "Pratikshya Karki", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303106", "name": "Puja Basnet", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303107", "name": "Rajan Thakur", "section": "P1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303108", "name": "Rajesh Mahato", "section": "P1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303109", "name": "Rajib Kumar Sharma", "section": "P2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303110", "name": "Rajib Thapa", "section": "P1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303111", "name": "Ramashankar Patel", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303112", "name": "Ramesh Khatri", "section": "P1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303113", "name": "Ranjit Kumar Yadav", "section": "B1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303114", "name": "Raunak Raj Singh", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303115", "name": "Raunak Chaudhary", "section": "B2", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303117", "name": "Rejina Basnet", "section": "B1", "class": "XI", "room": "201", "floor": "2nd Floor"}, {"symbol": "XI-SCI-8303118", "name": "Risav Singh Kshetry", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303119", "name": "Rishika Chaudhary", "section": "B1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303120", "name": "Ritesh Kumar sah", "section": "P1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303121", "name": "Ritika Kc.", "section": "B1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303122", "name": "Rojina Devkota", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303123", "name": "Roshan Shahi", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303124", "name": "Roshani Kumari Sharma", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303125", "name": "Roshna Thapa", "section": "B1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303126", "name": "Roshni Kumari B.K", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303127", "name": "Rujina Bishta", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303128", "name": "Rupesh kumar singh", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303129", "name": "Sabina Chaulagain", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303130", "name": "Sabitra Giri", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303131", "name": "Sabnam Karki", "section": "B1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303133", "name": "Sameer Safi", "section": "P1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303134", "name": "Samiksha Khadka", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303135", "name": "Samir Yadav", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303136", "name": "Sandesh Devkota", "section": "B1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303137", "name": "sandhya Thapa", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303138", "name": "Sapana shrestha", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303139", "name": "sashi kumar Gupta", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303140", "name": "Satendra Yadav", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303141", "name": "Saugat Timilsena", "section": "B1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303142", "name": "Sawal Deula", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303143", "name": "Shankar Kumar Das", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303144", "name": "Shiv Santosh Raj Mahaseth", "section": "B2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303145", "name": "Shivam Raut", "section": "P2", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303146", "name": "Siddhartha Shrestha", "section": "P1", "class": "XI", "room": "106", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303147", "name": "Sirjana Jerung Rai", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303148", "name": "Sitara Khatun", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303149", "name": "Siya Tamang", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303150", "name": "Smarika B.K", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303151", "name": "Smriti Rana Magar", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303152", "name": "Sonup Tamang", "section": "P1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303153", "name": "Sophiya Karki", "section": "B1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303154", "name": "Srijana Basnet", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303155", "name": "Subash Damai Nepali", "section": "P2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303156", "name": "Subash Nayak", "section": "P1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303157", "name": "Subhash Bikram Chand", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303158", "name": "Subiksha Basnet", "section": "B1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303159", "name": "Subina Khadka", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303160", "name": "Sudip Dhamala", "section": "P2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303161", "name": "Sugam Adhikari", "section": "P1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303162", "name": "Suman Dhami", "section": "B1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303163", "name": "Surekha Kumari", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303164", "name": "Sushil Basnet", "section": "P1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303165", "name": "Sushmita Tamang", "section": "B1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303166", "name": "Swopnil Kuikel", "section": "P2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303167", "name": "Swoyasha Adhikari", "section": "B2", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303168", "name": "Tara Parajuli", "section": "B1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303169", "name": "Unnat Pandey", "section": "B1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303170", "name": "Yashoda Giri", "section": "B1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303171", "name": "Yubraj Yadav", "section": "P1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XI-SCI-8303172", "name": "Yujan Ghimire", "section": "P1", "class": "XI", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604001", "name": "AADARSH JAISWAL", "section": "P1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604002", "name": "AADITYA KUMAR SAH", "section": "P1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604003", "name": "AADITYA PAL", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604004", "name": "AAISA KUMARI SHRESTHA", "section": "B2", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604005", "name": "AAKRITI KHAWAS", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604006", "name": "AAROHI K.C.", "section": "B2", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604007", "name": "AARUSHI RAUNIYAR", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604008", "name": "AARYAN BARMA SHKHA", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604009", "name": "AARYASHREEE SINGH", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604010", "name": "AASHIKA BHANDARI", "section": "B2", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604011", "name": "AAYUSH CHAUDHARY", "section": "B1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604012", "name": "AAYUSH KHADKA", "section": "P1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604013", "name": "AAYUSHMA NEPALI", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604014", "name": "AAYUSHNA THAPA", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604015", "name": "AAYUSMA KATUWAL", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604016", "name": "ADITI AARYA", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604017", "name": "ADITI GIRI", "section": "B1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604018", "name": "Algin Rimal", "section": "P1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604019", "name": "ALINA NEUPANE", "section": "B1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604020", "name": "ALISHA THARU", "section": "B1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604021", "name": "ALIZA RIMAL", "section": "B2", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604023", "name": "AMISHA KUMARI", "section": "B1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604024", "name": "AMRENDRA KUMAR SAH", "section": "B2", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604025", "name": "AMRIT KUMAR SAH", "section": "Merged", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604026", "name": "ANaMOL KATEL", "section": "B1", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604027", "name": "ANISHA TAMANG", "section": "B2", "class": "XII", "room": "305", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604028", "name": "ANJILA MAJHI", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604029", "name": "ANKESH CHANDRA SHARMA", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604030", "name": "ANUSHA BASNET", "section": "B2", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604031", "name": "ANUSHKA BHATTARAI", "section": "B1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604032", "name": "APIL NYAUPANE", "section": "B1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604033", "name": "ARICA CHAND", "section": "Merged", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604034", "name": "ASHLESHA TAMANG", "section": "Merged", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604035", "name": "ASWIN BHATTARAI", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604036", "name": "AVISHEK KUMAR SAH", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604037", "name": "BALBIKI SAH", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604038", "name": "BANDANA KUMARI", "section": "B2", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604039", "name": "BENICIO CHHANTYAL", "section": "B1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604040", "name": "BHARAT CHADARA", "section": "B2", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604041", "name": "BIBEK PRASAD SAH", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604042", "name": "BIBHA KUMARI MAHATO", "section": "B2", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604043", "name": "BIBISHA KARKI", "section": "Merged", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604044", "name": "BICKEY KUMAR MANDAL", "section": "Merged", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604045", "name": "BIDAYA SHANKARKUMAR GUPTA", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604046", "name": "BIPIN SINGH DHAMI", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604047", "name": "BISHNU PRASAD SAHHALUWAI", "section": "Merged", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604048", "name": "CHAMPA KUMARI CHAUDHARY", "section": "B1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604049", "name": "DEEPTI BHANDARI", "section": "B2", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604050", "name": "DEVIKA PARIYAR", "section": "B2", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604051", "name": "DHIRAJ MAHTHA", "section": "B1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604052", "name": "DHIRAJ SHARMA", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604053", "name": "DHIRENDRA KUMAR YADAV", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604054", "name": "DIBYANI THAPA", "section": "B1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604055", "name": "DIPAK TAMANG", "section": "B2", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604056", "name": "DIPESH SHAHI", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604057", "name": "GANESH KUMAR RAM", "section": "P1", "class": "XII", "room": "304", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604058", "name": "GUDU YADAV", "section": "P1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604059", "name": "HRISITA SHRESTHA", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604060", "name": "JAGDISH PRASAD SAH", "section": "P1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604061", "name": "JANBI SHRESTHA YOGAL", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604062", "name": "JENISHA SHRESTHA", "section": "Merged", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604063", "name": "JIBACHHA KUMAR THAKUR", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604064", "name": "KALISHA NAGARKOTI", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604065", "name": "KAMALA NEUPANE", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604066", "name": "KAPIL LUWAR", "section": "Merged", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604067", "name": "KAUSHAL KANDEL", "section": "Merged", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604068", "name": "KRISHMA MUNGRATI", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604069", "name": "Kritika Basnet", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604070", "name": "KRITIKA DHAKAL", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604071", "name": "KRITIKA SAH", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604072", "name": "KUL BAHADUR KHATRI", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604073", "name": "KUNDAN KUMAR MAHATO", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604074", "name": "KUSUM KHATRI", "section": "Merged", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604075", "name": "LALITA JAISHI", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604076", "name": "LAXMI KHATRI", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604077", "name": "LAXMI KUMARI DANUWAR", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604078", "name": "LAXMI KUMARI GUPTA", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604079", "name": "MANASWI MALLA", "section": "Merged", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604080", "name": "MANISH RAHI", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604081", "name": "MANISHA BARAL", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604082", "name": "MANOHAR GOPAL YADAV", "section": "P1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604083", "name": "MARSHIKA SIGDEL", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604084", "name": "MEENA SHRESTHA", "section": "B1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604085", "name": "MISANG LAPCHA", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604086", "name": "MOHAMMAD FAIJ", "section": "B2", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604087", "name": "NABIN PANDEY", "section": "P1", "class": "XII", "room": "302", "floor": "3rd Floor"}, {"symbol": "XII-SCI-2604088", "name": "NIKITA KUMARI MAHATO", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604089", "name": "NIRAJ KUMAR RAM", "section": "B2", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604090", "name": "NIRATA BARAILY", "section": "B2", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604091", "name": "NIRMALA RAI", "section": "B2", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604092", "name": "NISCHAL CHAUDHARY", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604093", "name": "NISHA PANDEY", "section": "B1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604094", "name": "NISHAN BHUJEL", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604095", "name": "NISHANT DHAKAL", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604096", "name": "NISHMA CHAULAGAIN", "section": "B2", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604097", "name": "NITESH KUMAR THARU", "section": "Merged", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604098", "name": "OSISH SHRESTHA", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604099", "name": "PABIN BHANDARI", "section": "Merged", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604100", "name": "PASHNA RAI", "section": "Merged", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604101", "name": "PRABAL PARAJULI", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604102", "name": "PRABESH BASNET", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604103", "name": "PRAMISHA KHADKA", "section": "B1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604104", "name": "PRANIKA GURUNG", "section": "B2", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604105", "name": "PRANISHA DAHAL", "section": "Merged", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604106", "name": "PRASHIKA BUDHATHOKI", "section": "Merged", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604107", "name": "PRATIK KHANAL", "section": "Merged", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604108", "name": "PRATIK SHAHI", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604109", "name": "PRATIKSHYA PURI", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604110", "name": "PRINS KUMAR SAH", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604111", "name": "PUJA KUMARI", "section": "Merged", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604112", "name": "RAHUL KUMAR BHAITHA", "section": "P1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604113", "name": "RAJA BABU DAS", "section": "B2", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604114", "name": "RAJAN ROKAYA", "section": "B1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604116", "name": "RAKSHYA YOGI", "section": "Merged", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604117", "name": "RAMCHANDRA KUMAR KAPAIR", "section": "B2", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604118", "name": "RAMPRAKASH YADAV", "section": "B1", "class": "XII", "room": "203", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604119", "name": "REJINA SURKHETI", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604120", "name": "RESHMI PAUDEL", "section": "B2", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604121", "name": "ROCHAK BHANDARI", "section": "P1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604122", "name": "ROHIT KUMAR MAHATO", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604123", "name": "ROJIKA KARKI", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604124", "name": "ROJINA TAMANG", "section": "B2", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604125", "name": "ROSAN BUDHATHOKI", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604127", "name": "RUPESH KUMAR ADHIKARI", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604128", "name": "SABIN DAHAL", "section": "P1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604129", "name": "SABITA ROKAYA", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604130", "name": "SADIKSHYA PRADHAN", "section": "Merged", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604131", "name": "SADIP PANDEY", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604132", "name": "SAFAL ADHIKARI", "section": "P1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604133", "name": "SAGAR DAHAL", "section": "P1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604134", "name": "SAGUN KHATRI", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604135", "name": "SAIMAN CHAULAGAIN", "section": "B1", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604136", "name": "SAJAN PURI", "section": "Merged", "class": "XII", "room": "202", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604137", "name": "SAJINA THAPA", "section": "B1", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604138", "name": "SAKHI PAUDEL", "section": "P1", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604139", "name": "SALINA BASNET", "section": "B1", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604140", "name": "SALONI YADAV", "section": "B1", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604141", "name": "SAMIKSHA NEPALI", "section": "B1", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604142", "name": "SAMIKSHYA SHARMA", "section": "Merged", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604143", "name": "SAMIKSHYA THAKURI", "section": "B2", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604144", "name": "SAMIR SAFI", "section": "Merged", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604145", "name": "SAMISHA RAUT", "section": "B2", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604146", "name": "SAMJHANA AGRI", "section": "B2", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604147", "name": "SANAM KHATRI", "section": "B2", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604148", "name": "SANDHYA KUMARI", "section": "B2", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604149", "name": "SANDHYA SHRESTHA", "section": "P1", "class": "XII", "room": "201", "floor": "2nd Floor"}, {"symbol": "XII-SCI-2604150", "name": "SANJITA MAGAR", "section": "B2", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604151", "name": "SARASWATI KUMARI GUPTA", "section": "B2", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604152", "name": "SARGAM SUBEDI", "section": "B1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604153", "name": "SAURAV THAPALIYA", "section": "P1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604154", "name": "SAYUSHMA SHRESTHA", "section": "B1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604155", "name": "SHIVNANDAN YADAV", "section": "P1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604156", "name": "SHUBHEKHAN YADAV", "section": "P1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604157", "name": "SHUBHEKSHA YADAV", "section": "Merged", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604158", "name": "SIDDHARTHA SAGAR BUDHA", "section": "B1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604159", "name": "SIDHIKA THAKUR", "section": "B1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604160", "name": "SIRJANA JOSHI", "section": "B1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604161", "name": "SONIKA RAI", "section": "B2", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604162", "name": "SUJAN KHATRI", "section": "P1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604163", "name": "SUJIT KUMAR MANDAL KHATBE", "section": "B1", "class": "XII", "room": "106", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604164", "name": "SUNIL KUMAR MAHATO", "section": "P1", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604165", "name": "SUNISHA BHATTARAI", "section": "B2", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604166", "name": "SUPRIYA GHIMIRE", "section": "B2", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604167", "name": "SUPRIYA KOIRALA", "section": "B1", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604168", "name": "SUPRIYA THAPA", "section": "Merged", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604169", "name": "SUShANT KHADKA", "section": "P1", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604170", "name": "SUSHIL KUMAR JAISWAL", "section": "P1", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604171", "name": "SUSMITA TAMANG", "section": "B1", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604172", "name": "SWECHCHHA DOTEL", "section": "Merged", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604173", "name": "SWORUP ACHARYA", "section": "P1", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604174", "name": "UNIQUE BISHWAKARMA", "section": "B2", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604175", "name": "UNISHA DAHAL", "section": "Merged", "class": "XII", "room": "101", "floor": "1st Floor"}, {"symbol": "XII-SCI-2604176", "name": "YUVRAJ SAH", "section": "B1", "class": "XII", "room": "101", "floor": "1st Floor"}];
+const roomsMeta = [
+ {room:'305',floor:'3rd Floor'},{room:'304',floor:'3rd Floor'},{room:'302',floor:'3rd Floor'},
+ {room:'203',floor:'2nd Floor'},{room:'202',floor:'2nd Floor'},{room:'201',floor:'2nd Floor'},
+ {room:'106',floor:'1st Floor'},{room:'101',floor:'1st Floor'},
+];
+let fClass='', fSec='', fRoom='', query='';
+let saved = JSON.parse(localStorage.getItem('bw_saved')||'[]');
+let currentModal=null;
+
+const roomF=document.getElementById('roomF');
+roomsMeta.forEach(r=>{
+ const d=document.createElement('div');d.className='pill';d.dataset.v=r.room;d.textContent='Room '+r.room;
+ d.onclick=()=>{setFilter('room',r.room)};roomF.appendChild(d);
+});
+function bindPills(id, key){
+ document.getElementById(id).querySelectorAll('.pill').forEach(p=>{
+  p.onclick=()=>setFilter(key,p.dataset.v);
+ });
+}
+bindPills('classF','class');bindPills('secF','sec');
+
+function setFilter(key,val){
+ if(key==='class') fClass=val;
+ if(key==='sec') fSec=val;
+ if(key==='room'){ fRoom=val; if(curView==='seats'&&fRoom){smRoom=fRoom;smSel=null;} }
+ syncPills();render();
+}
+function syncPills(){
+ document.querySelectorAll('#classF .pill').forEach(p=>p.classList.toggle('active',p.dataset.v===fClass));
+ document.querySelectorAll('#secF .pill').forEach(p=>p.classList.toggle('active',p.dataset.v===fSec));
+ document.querySelectorAll('#roomF .pill').forEach(p=>p.classList.toggle('active',p.dataset.v===fRoom));
+ document.querySelectorAll('#rooms .room-card').forEach(c=>c.classList.toggle('active',c.dataset.room===fRoom));
+}
+document.getElementById('q').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();render();});
+function clearAll(){fClass='';fSec='';fRoom='';query='';document.getElementById('q').value='';syncPills();render();}
+
+function filtered(){
+ return DATA.filter(r=>{
+  if(fClass==='__saved' && !saved.includes(r.symbol)) return false;
+  else if(fClass && fClass!=='__saved' && r.class!==fClass) return false;
+  if(fSec && r.section!==fSec) return false;
+  if(fRoom && r.room!==fRoom) return false;
+  if(query){
+   const q=query.replace(/-/g,'');
+   const sym=r.symbol.toLowerCase().replace(/-/g,'');
+   if(!(r.name.toLowerCase().includes(query)||sym.includes(q)||r.symbol.toLowerCase().includes(query))) return false;
+  }
+  return true;
+ });
+}
+
+function render(){
+ const list=filtered();
+ document.getElementById('stTotal').textContent=list.length;
+ document.getElementById('stXI').textContent=list.filter(r=>r.class==='XI').length;
+ document.getElementById('stXII').textContent=list.filter(r=>r.class==='XII').length;
+ const tb=document.getElementById('tbody');tb.innerHTML='';
+ list.slice(0,800).forEach((r,i)=>{
+  const tr=document.createElement('tr');
+  const isSaved=saved.includes(r.symbol);
+  tr.innerHTML=`<td><span class="star ${isSaved?'saved':''}" onclick="toggleSave('${r.symbol}')">★</span></td>
+  <td style="color:#94a3b8">${i+1}</td>
+  <td><span class="sym">${r.symbol}</span></td>
+  <td style="font-weight:700">${escapeHtml(r.name)}</td>
+  <td>${r.class}</td>
+  <td><span class="sec sec-${r.section}">${r.section}</span></td>
+  <td><span class="room-pill">Room ${r.room} • ${r.floor.replace(' Floor','F')}</span></td>
+  <td><button class="btn btn-ghost btn-small" onclick="openModal('${r.symbol}')">View</button></td>`;
+  tb.appendChild(tr);
+ });
+ document.getElementById('empty').style.display=list.length?'none':'block';
+ renderRooms(list);
+ renderMix();
+ if(curView==='seats') renderSeatMap();
+ if(curView==='floor') renderFloor();
+}
+function renderRooms(list){
+ const wrap=document.getElementById('rooms');wrap.innerHTML='';
+ roomsMeta.forEach(m=>{
+  const c=list.filter(r=>r.room===m.room).length;
+  const total=DATA.filter(r=>r.room===m.room).length;
+  const pct=Math.round((c/(total||1))*100);
+  const d=document.createElement('div');
+  d.className='card room-card'+(fRoom===m.room?' active':'');
+  d.dataset.room=m.room;
+  d.innerHTML=`<div class="floor">${m.floor}</div><h3>Room ${m.room}</h3><div class="room-count">${c}<span style="font-size:13px;color:var(--muted)"> / ${total}</span></div><div class="room-bar"><i style="width:${fRoom||query||fClass||fSec? Math.round(c/(list.length||1)*100*8):100}%"></i></div><div style="font-size:12px;color:var(--muted);margin-top:6px">${DATA.filter(r=>r.room===m.room&&r.class==='XI').length} XI • ${DATA.filter(r=>r.room===m.room&&r.class==='XII').length} XII</div>`;
+  d.onclick=()=>{fRoom=fRoom===m.room?'':m.room;if(curView==='seats'&&fRoom){smRoom=fRoom;smSel=null;}syncPills();render();};
+  wrap.appendChild(d);
+ });
+ renderFloor();
+}
+function renderFloor(){
+ const fv=document.getElementById('floorView');
+ const floors=['3rd Floor','2nd Floor','1st Floor'];
+ fv.innerHTML=floors.map(f=>{
+  const rms=roomsMeta.filter(r=>r.floor===f);
+  return `<h3 style="margin:12px 0 8px">${f}</h3><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">`+
+  rms.map(m=>{
+   const studs=filtered().filter(r=>r.room===m.room);
+   return `<div class="card" style="padding:12px"><b>Room ${m.room}</b> <span style="color:var(--muted);font-size:12px">(${studs.length})</span><div style="margin-top:8px;max-height:180px;overflow:auto;font-size:13px">`+
+   studs.map(s=>`<div style="padding:4px 0;border-bottom:1px solid #f1f5f9"><span style="font-weight:700">${escapeHtml(s.name)}</span><br><span style="font-family:monospace;font-size:11px">${s.symbol}</span> • ${s.section}</div>`).join('')+`</div></div>`;
+  }).join('')+`</div>`;
+ }).join('');
+}
+function toggleFloorView(){ setView('floor'); }
+function toggleSeatView(){ setView('seats'); }
+let curView='list', smRoom='305', smSel=null;
+function setView(v){
+ curView=v;
+ const listCard=document.getElementById('tbody').closest('.card');
+ listCard.style.display=v==='list'?'block':'none';
+ document.getElementById('floorView').style.display=v==='floor'?'block':'none';
+ document.getElementById('seatView').style.display=v==='seats'?'block':'none';
+ document.getElementById('tabAll').classList.toggle('active',v==='list');
+ document.getElementById('tabFloor').classList.toggle('active',v==='floor');
+ document.getElementById('tabSeats').classList.toggle('active',v==='seats');
+ if(v==='floor') renderFloor();
+ if(v==='seats') renderSeatMap();
+}
+document.getElementById('tabAll').onclick=()=>setView('list');
+window.addEventListener('resize',()=>{if(curView==='seats')renderSeatMap();});
+
+const SECTIONS=['B1','B2','P1','P2','Merged'];
+function secCounts(arr){
+ const c={};SECTIONS.forEach(s=>c[s]=0);arr.forEach(r=>c[r.section]=(c[r.section]||0)+1);return c;
+}
+function mixRow(label, arr){
+ const c=secCounts(arr), n=arr.length||1;
+ const total=arr.length;
+ const segs=SECTIONS.filter(s=>c[s]>0).map(s=>{
+  const pct=(c[s]/n)*100;
+  const show=pct>7;
+  return `<span class="s-${s}" style="width:${pct}%" title="${s}: ${c[s]}">${show?c[s]:''}</span>`;
+ }).join('');
+ const nums=SECTIONS.filter(s=>c[s]>0).map(s=>`${s} ${c[s]}`).join(' • ');
+ return `<div class="mix-row"><span class="lbl">${label} <small style="color:var(--muted);font-weight:700">(${total})</small></span><div class="mix-bar">${segs}</div><span class="mix-nums">${nums}</span></div>`;
+}
+function renderMix(){
+ const list=filtered();
+ let html='';
+ html+=mixRow('ALL', list);
+ ['XI','XII'].forEach(cl=>{
+  const arr=list.filter(r=>r.class===cl);
+  if(arr.length) html+=mixRow(cl+' Science', arr);
+ });
+ roomsMeta.forEach(m=>{
+  const arr=list.filter(r=>r.room===m.room);
+  if(arr.length) html+=mixRow('Room '+m.room, arr);
+ });
+ document.getElementById('mixRows').innerHTML=html||'<div style="color:var(--muted);font-size:13px">No data for current filters.</div>';
+}
+
+function roomStudents(room){
+ return DATA.filter(r=>r.room===room).sort((a,b)=>a.symbol.localeCompare(b.symbol));
+}
+/* ---- Bench model: 1 XI + 1 XII per bench. Row = [bench] SPACE [bench], going down ---- */
+const _layoutCache={};
+function layout(room){
+ if(_layoutCache[room]) return _layoutCache[room];
+ const bySym=(a,b)=>a.symbol.localeCompare(b.symbol);
+ const xi=DATA.filter(r=>r.room===room&&r.class==='XI').sort(bySym);
+ const xii=DATA.filter(r=>r.room===room&&r.class==='XII').sort(bySym);
+ const benches=[];
+ const m=Math.min(xi.length,xii.length);
+ for(let k=0;k<m;k++) benches.push([xi[k],xii[k]]);
+ const rest=(xi.length>m?xi:xii).slice(m);
+ for(let k=0;k<rest.length;k+=2) benches.push(rest.slice(k,k+2));
+ const rows=[];
+ for(let k=0;k<benches.length;k+=2) rows.push([benches[k],benches[k+1]||null]);
+ const pos={}, order=[];
+ rows.forEach((rw,r)=>rw.forEach((b,s)=>{
+  if(!b) return;
+  b.forEach((st,k)=>{ pos[st.symbol]={r,s,k,bench:r*2+s,flat:order.length}; order.push(st.symbol); });
+ }));
+ const L={rows,benches,pos,order};
+ _layoutCache[room]=L; return L;
+}
+function seatInfo(sym){
+ const st=DATA.find(x=>x.symbol===sym); if(!st) return null;
+ const L=layout(st.room), p=L.pos[sym]; if(!p) return null;
+ return {st,L,p};
+}
+function nbrsOf(sym){
+ const s=seatInfo(sym); if(!s) return {};
+ const {L,p}=s;
+ const get=(r,ss,k)=>{ const rw=L.rows[r]; if(!rw) return null; const b=rw[ss]; if(!b) return null; return b[k]||null; };
+ return {
+  mate:get(p.r,p.s,1-p.k),
+  front:get(p.r-1,p.s,p.k),
+  back:get(p.r+1,p.s,p.k),
+  across:get(p.r,p.s?0:1,p.k)
+ };
+}
+function seatCell(st,bi,k){
+ const cls='seat'+(st.symbol===smSel?' self':'')+((window._nbrSet&&window._nbrSet.has(st.symbol))?' nbr':'');
+ const nm=escapeHtml(st.name.split(' ').slice(0,2).join(' '));
+ return `<div class="${cls}" onclick="selSeat('${st.symbol}')"><div class="nm">${nm}</div><div class="seat-chips"><span class="cchip c-${st.class}">${st.class}</span><span class="sec sec-${st.section}" style="font-size:9px;padding:2px 6px">${st.section}</span></div><div class="sg">B${bi+1}${k===0?'·L':'·R'}</div></div>`;
+}
+function renderSeatMap(){
+ const meta=roomsMeta.find(m=>m.room===smRoom)||roomsMeta[0];
+ const L=layout(meta.room);
+ const studs=roomStudents(meta.room);
+ document.getElementById('smTitle').textContent=`Room ${meta.room} — Bench map (rough, ${meta.floor})`;
+ document.getElementById('smMeta').textContent=`${studs.length} students • ${L.benches.length} benches • ${L.rows.length} rows down • 1 XI + 1 XII per bench`;
+ const rs=document.getElementById('smRooms');
+ if(!rs.dataset.built){
+  rs.innerHTML=roomsMeta.map(m=>`<span class="pill${m.room===smRoom?' active':''}" data-r="${m.room}" onclick="smPick('${m.room}')">Room ${m.room}</span>`).join('');
+  rs.dataset.built='1';
+ } else {
+  rs.querySelectorAll('.pill').forEach(p=>p.classList.toggle('active',p.dataset.r===smRoom));
+ }
+ window._nbrSet=new Set();
+ if(smSel){ Object.values(nbrsOf(smSel)).forEach(x=>{ if(x) window._nbrSet.add(x.symbol); }); }
+ const grid=document.getElementById('deskGrid');
+ let html='<div class="room-rows">';
+ L.rows.forEach((rw,r)=>{
+  html+='<div class="brow">';
+  rw.forEach((b,s)=>{
+   if(s===1) html+='<div class="aisle">SPACE</div>';
+   if(!b) return;
+   const bi=r*2+s;
+   html+=`<div class="bench" data-label="Bench ${bi+1} • Row ${r+1}">`;
+   b.forEach((st,k)=>{ html+=seatCell(st,bi,k); });
+   if(b.length<2) html+='<div class="seat empty">—</div>';
+   html+='</div>';
+  });
+  html+='</div>';
+ });
+ html+='</div>';
+ grid.innerHTML=html;
+ renderNbr();
+}
+function smPick(room){ smRoom=room; smSel=null; renderSeatMap(); }
+function selSeat(sym){
+ smSel=(smSel===sym)?null:sym;
+ renderSeatMap();
+}
+function nbrCard(roleLabel, st, emptyNote){
+ if(!st) return `<div class="nbr-item"><div class="role">${roleLabel}</div><span style="color:var(--muted)">${emptyNote}</span></div>`;
+ return `<div class="nbr-item" onclick="selSeat('${st.symbol}')"><div class="role">${roleLabel}</div><b>${escapeHtml(st.name)}</b><br><span class="cchip c-${st.class}" style="font-size:9px">${st.class}</span> <span class="sec sec-${st.section}" style="font-size:9px;padding:2px 6px">${st.section}</span> <span style="font-family:monospace;font-size:11px">${st.symbol}</span><br><button class="btn btn-ghost btn-small" style="margin-top:6px" onclick="event.stopPropagation();openModal('${st.symbol}')">Full profile →</button></div>`;
+}
+function renderNbr(){
+ const panel=document.getElementById('nbrPanel');
+ const me=smSel?DATA.find(x=>x.symbol===smSel):null;
+ if(!me){
+  panel.innerHTML='🪑 Tap any seat to see who sits <b>on the bench, in front, behind, and across the space</b>. Each bench = 1 XI + 1 XII student.';
+  return;
+ }
+ const nb=nbrsOf(smSel);
+ const selfBox=`<div class="nbr-item self-box"><div class="role" style="color:var(--indigo)">Selected — ${escapeHtml(me.name)}</div><span class="cchip c-${me.class}" style="font-size:9px">${me.class}</span> <span class="sec sec-${me.section}" style="font-size:9px;padding:2px 6px">${me.section}</span> <span style="font-family:monospace;font-size:11px">${me.symbol}</span><br><button class="btn btn-primary btn-small" style="margin-top:6px" onclick="openModal('${me.symbol}')">Open full profile →</button></div>`;
+ panel.innerHTML=`<b style="font-size:14px">👥 Around this seat (Room ${smRoom})</b><div class="nbr-grid">${selfBox}`
+  +nbrCard('🪑 Bench mate (same bench)',nb.mate,'— (solo bench)')
+  +nbrCard('🔼 Front (row ahead)',nb.front,'— (front row, board ahead)')
+  +nbrCard('🔽 Back (row behind)',nb.back,'— (last row, door behind)')
+  +nbrCard('↔ Across the space',nb.across,'— (no bench across)')
+  +`</div>`;
+}
+
+function escapeHtml(s){return s.replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]))}
+function toggleSave(sym){
+ if(saved.includes(sym)) saved=saved.filter(s=>s!==sym); else saved.push(sym);
+ localStorage.setItem('bw_saved',JSON.stringify(saved));render();
+}
+function initials(n){ const w=n.trim().split(/\s+/); return ((w[0]||'')[0]||'')+((w[1]||'')[0]||''); }
+function classBarHTML(arr){
+ const c=secCounts(arr), n=arr.length||1;
+ const segs=SECTIONS.filter(s=>c[s]>0).map(s=>{ const pct=(c[s]/n)*100; return `<span class="s-${s}" style="width:${pct}%">${pct>14?c[s]:''}</span>`; }).join('');
+ const nums=SECTIONS.filter(s=>c[s]>0).map(s=>`${s} ${c[s]}`).join(' • ');
+ return segs+`</div><div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:4px">${nums}</div>`;
+}
+function openModal(sym){
+ const r=DATA.find(x=>x.symbol===sym); if(!r) return;
+ currentModal=r;
+ const info=seatInfo(sym), nb=nbrsOf(sym);
+ const clsAll=DATA.filter(x=>x.class===r.class).sort((a,b)=>a.symbol.localeCompare(b.symbol));
+ const clsTotal=clsAll.length;
+ const clsRank=clsAll.findIndex(x=>x.symbol===sym)+1;
+ const secInCls=clsAll.filter(x=>x.section===r.section).length;
+ const roomAll=roomStudents(r.room);
+ const L=layout(r.room);
+ const benchNo=info?info.p.bench+1:'—', rowNo=info?info.p.r+1:'—';
+ const sideTxt=info?(info.p.s===0?'Left of space':'Right of space'):'—';
+ const mate=nb.mate;
+ document.getElementById('mClass').textContent=r.class+' Science';
+ document.getElementById('mSecChip').textContent='Section '+r.section;
+ document.getElementById('mRoomChip').textContent='Room '+r.room+' • '+r.floor;
+ document.getElementById('mAvatar').textContent=initials(r.name).toUpperCase();
+ document.getElementById('mName').textContent=r.name;
+ document.getElementById('mSym').textContent=r.symbol;
+ document.getElementById('iClass').textContent=r.class+' Science';
+ document.getElementById('iClassSub').textContent=`${clsTotal} students in class • you are #${clsRank}`;
+ document.getElementById('iSec').textContent=r.section;
+ document.getElementById('iSecSub').textContent=`${secInCls} in class • ${roomAll.filter(x=>x.section===r.section).length} in this room`;
+ document.getElementById('iRoom').textContent='Room '+r.room;
+ document.getElementById('iRoomSub').textContent=`${r.floor} • ${roomAll.length} students • ${L.benches.length} benches`;
+ document.getElementById('iBench').textContent=`Row ${rowNo} • ${sideTxt}`;
+ document.getElementById('iBenchSub').textContent=`Bench ${benchNo} with ${mate?escapeHtml(mate.name)+' ('+mate.class+')':'nobody (solo)'}`;
+ document.getElementById('iClassBar').innerHTML=`<div class="class-bar">`+classBarHTML(clsAll);
+ const order=L.order, idx=order.indexOf(sym);
+ const hop=(label,st,note)=>{
+  if(!st) return `<div class="hop off"><div class="role">${label}</div><div class="who">—</div><div class="meta">${note}</div></div>`;
+  return `<div class="hop" onclick="openModal('${st.symbol}')"><div class="role">${label}</div><div class="who">${escapeHtml(st.name)}</div><div class="meta"><span class="cchip c-${st.class}" style="font-size:9px">${st.class}</span> ${st.section} • ${st.symbol}</div></div>`;
+ };
+ document.getElementById('hopGrid').innerHTML=
+  hop('🪑 Bench mate — same bench',mate,'solo bench')
+  +hop('🔼 Front — row ahead',nb.front,'front row = board')
+  +hop('🔽 Back — row behind',nb.back,'last row = door')
+  +hop('↔ Across the space',nb.across,'no bench across')
+  +`<div class="hop" onclick="hopStudent(-1)"><div class="role">⬅️ Prev seat</div><div class="who">${idx>0?escapeHtml((DATA.find(x=>x.symbol===order[idx-1])||{}).name||'—'):'—'}</div><div class="meta">${idx>0?order[idx-1]:'first seat in room'}</div></div>`
+  +`<div class="hop" onclick="hopStudent(1)"><div class="role">Next seat ➡️</div><div class="who">${idx<order.length-1?escapeHtml((DATA.find(x=>x.symbol===order[idx+1])||{}).name||'—'):'—'}</div><div class="meta">${idx<order.length-1?order[idx+1]:'last seat in room'}</div></div>`;
+ document.getElementById('modal').classList.add('open');
+}
+function hopStudent(d){
+ if(!currentModal) return;
+ const L=layout(currentModal.room);
+ let i=L.order.indexOf(currentModal.symbol);
+ i=(i+d+L.order.length)%L.order.length;
+ openModal(L.order[i]);
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+function printSlip(){document.body.classList.add('printing');window.print();setTimeout(()=>document.body.classList.remove('printing'),400);}
+function copyModal(){if(!currentModal) return;navigator.clipboard.writeText(currentModal.symbol+' - '+currentModal.name+' - Room '+currentModal.room+' ('+currentModal.floor+')');alert('Copied: '+currentModal.symbol);}
+function saveModal(){if(!currentModal) return;toggleSave(currentModal.symbol);closeModal();}
+function exportCSV(){
+ const list=filtered();
+ const rows=[['SN','Symbol','Name','Class','Section','Room','Floor']];
+ list.forEach((r,i)=>rows.push([i+1,r.symbol,r.name,r.class,r.section,r.room,r.floor]));
+ const csv=rows.map(r=>r.map(c=>`\"${String(c).replace(/\"/g,'\"\"')}\"`).join(',')).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='bridgewater-seat-plan-2083.csv';a.click();
+}
+function printSlipList(){window.print();}
+document.addEventListener('keydown',e=>{
+ const mOpen=document.getElementById('modal').classList.contains('open');
+ if(mOpen){
+  if(e.key==='Escape')closeModal();
+  else if(e.key==='ArrowLeft')hopStudent(-1);
+  else if(e.key==='ArrowRight')hopStudent(1);
+  else if(e.key==='ArrowUp'){e.preventDefault();const nb=nbrsOf(currentModal.symbol);if(nb.front)openModal(nb.front.symbol);}
+  else if(e.key==='ArrowDown'){e.preventDefault();const nb=nbrsOf(currentModal.symbol);if(nb.back)openModal(nb.back.symbol);}
+  return;
+ }
+ if(e.key==='Escape')closeModal();
+ if(e.key==='/'&&document.activeElement!==document.getElementById('q')){e.preventDefault();document.getElementById('q').focus();}
+});
+syncPills();render();
+</script>
+</body>
+</html>
