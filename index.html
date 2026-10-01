@@ -110,7 +110,7 @@ tr:hover td{background:#f8faff}
 .grid-wrap::after{content:'⬇ BACK OF ROOM — DOOR';display:block;text-align:center;font-size:10px;font-weight:900;color:#94a3b8;letter-spacing:.12em;padding-top:10px}
 .room-rows{display:flex;flex-direction:column;gap:14px;align-items:center}
 .brow{display:flex;align-items:stretch;gap:8px}
-.bench{display:flex;gap:4px;background:#e2e8f0;border:1px solid #cbd5e1;border-radius:12px;padding:7px 5px;position:relative}
+.bench{display:flex;flex-direction:column;gap:4px;background:#e2e8f0;border:1px solid #cbd5e1;border-radius:12px;padding:7px 5px;position:relative;justify-content:center}
 .bench::after{content:attr(data-label);position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:900;color:#64748b;background:#f1f5f9;padding:1px 8px;border-radius:999px;border:1px solid #e2e8f0;white-space:nowrap}
 .aisle{width:56px;flex:0 0 auto;align-self:stretch;display:flex;align-items:center;justify-content:center;border-left:2px dashed #cbd5e1;border-right:2px dashed #cbd5e1;background:#fff;border-radius:8px;font-size:9px;font-weight:900;letter-spacing:.18em;color:#94a3b8;writing-mode:vertical-rl}
 .bench .seat{width:118px;min-height:82px}
@@ -270,7 +270,7 @@ tr:hover td{background:#f8faff}
 <div class="sm-rooms" id="smRooms"></div>
 </div>
 <div class="grid-wrap"><div class="room-rows" id="deskGrid"></div></div>
-<div class="note">⚠️ Rough estimation only — each bench seats 2 students (one XI + one XII together), 2 benches per row with a space between, rows run board → door. Not the official seating chart.</div>
+<div class="note">⚠️ Rough estimation only — each bench seats 2 students (one XI + one XII together, front + back — not side by side), 2 benches per row with a space between, rows run board → door. Not the official seating chart.</div>
 <div class="card nbr-panel" id="nbrPanel">🪑 Tap any seat to see the students sitting <b>front, back, left, right</b> of them.</div>
 </div>
 
@@ -515,17 +515,18 @@ function nbrsOf(sym){
  const s=seatInfo(sym); if(!s) return {};
  const {L,p}=s;
  const get=(r,ss,k)=>{ const rw=L.rows[r]; if(!rw) return null; const b=rw[ss]; if(!b) return null; return b[k]||null; };
+ const mate=get(p.r,p.s,1-p.k);
  return {
-  mate:get(p.r,p.s,1-p.k),
-  front:get(p.r-1,p.s,p.k),
-  back:get(p.r+1,p.s,p.k),
+  mate:mate,
+  front:(p.k===1?mate:get(p.r-1,p.s,1)),
+  back:(p.k===0?mate:get(p.r+1,p.s,0)),
   across:get(p.r,p.s?0:1,p.k)
  };
 }
 function seatCell(st,bi,k){
  const cls='seat'+(st.symbol===smSel?' self':'')+((window._nbrSet&&window._nbrSet.has(st.symbol))?' nbr':'');
  const nm=escapeHtml(st.name.split(' ').slice(0,2).join(' '));
- return `<div class="${cls}" onclick="selSeat('${st.symbol}')"><div class="nm">${nm}</div><div class="seat-chips"><span class="cchip c-${st.class}">${st.class}</span><span class="sec sec-${st.section}" style="font-size:9px;padding:2px 6px">${st.section}</span></div><div class="sg">B${bi+1}${k===0?'·L':'·R'}</div></div>`;
+   return `<div class="${cls}" onclick="selSeat('${st.symbol}')"><div class="nm">${nm}</div><div class="seat-chips"><span class="cchip c-${st.class}">${st.class}</span><span class="sec sec-${st.section}" style="font-size:9px;padding:2px 6px">${st.section}</span></div><div class="sg">B${bi+1}${k===0?'·F':'·B'}</div></div>`;
 }
 function renderSeatMap(){
  const meta=roomsMeta.find(m=>m.room===smRoom)||roomsMeta[0];
@@ -580,7 +581,7 @@ function renderNbr(){
  const nb=nbrsOf(smSel);
  const selfBox=`<div class="nbr-item self-box"><div class="role" style="color:var(--indigo)">Selected — ${escapeHtml(me.name)}</div><span class="cchip c-${me.class}" style="font-size:9px">${me.class}</span> <span class="sec sec-${me.section}" style="font-size:9px;padding:2px 6px">${me.section}</span> <span style="font-family:monospace;font-size:11px">${me.symbol}</span><br><button class="btn btn-primary btn-small" style="margin-top:6px" onclick="openModal('${me.symbol}')">Open full profile →</button></div>`;
  panel.innerHTML=`<b style="font-size:14px">👥 Around this seat (Room ${smRoom})</b><div class="nbr-grid">${selfBox}`
-  +nbrCard('🪑 Bench mate (same bench)',nb.mate,'— (solo bench)')
+  +nbrCard('🪑 Bench mate (front / back of you)',nb.mate,'— (solo bench)')
   +nbrCard('🔼 Front (row ahead)',nb.front,'— (front row, board ahead)')
   +nbrCard('🔽 Back (row behind)',nb.back,'— (last row, door behind)')
   +nbrCard('↔ Across the space',nb.across,'— (no bench across)')
@@ -625,7 +626,7 @@ function openModal(sym){
  document.getElementById('iRoom').textContent='Room '+r.room;
  document.getElementById('iRoomSub').textContent=`${r.floor} • ${roomAll.length} students • ${L.benches.length} benches`;
  document.getElementById('iBench').textContent=`Row ${rowNo} • ${sideTxt}`;
- document.getElementById('iBenchSub').textContent=`Bench ${benchNo} with ${mate?escapeHtml(mate.name)+' ('+mate.class+')':'nobody (solo)'}`;
+ document.getElementById('iBenchSub').textContent=`Bench ${benchNo} • ${info.p.k===0?'Front seat':'Back seat'} • with ${mate?escapeHtml(mate.name)+' ('+mate.class+', '+(info.p.k===0?'behind you':'in front of you')+')':'nobody (solo)'}`;
  document.getElementById('iClassBar').innerHTML=`<div class="class-bar">`+classBarHTML(clsAll);
  const order=L.order, idx=order.indexOf(sym);
  const hop=(label,st,note)=>{
@@ -633,7 +634,7 @@ function openModal(sym){
   return `<div class="hop" onclick="openModal('${st.symbol}')"><div class="role">${label}</div><div class="who">${escapeHtml(st.name)}</div><div class="meta"><span class="cchip c-${st.class}" style="font-size:9px">${st.class}</span> ${st.section} • ${st.symbol}</div></div>`;
  };
  document.getElementById('hopGrid').innerHTML=
-  hop('🪑 Bench mate — same bench',mate,'solo bench')
+  hop('🪑 Bench mate — front/back of you',mate,'solo bench')
   +hop('🔼 Front — row ahead',nb.front,'front row = board')
   +hop('🔽 Back — row behind',nb.back,'last row = door')
   +hop('↔ Across the space',nb.across,'no bench across')
